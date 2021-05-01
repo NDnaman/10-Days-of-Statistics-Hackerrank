@@ -1,0 +1,69 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <bits/stdc++.h>
+#include <unordered_map>
+using namespace std;
+
+
+float mean(int a[], int n)      //function to find out mean
+{
+    float avg = 0;
+    for(int i = 0; i < n; i++)
+        avg += a[i];          //add all numbers
+    return avg/n;             //divide by n, and return
+}
+
+float median(int a[], int n)    //function to find out median
+{
+    sort(a, a+n);             //median can only be found of a sorted array, so we use in-built sort function
+    if(n%2 == 1)
+        return a[(n+1)/2];    //return the middle element if number of numbers is odd
+    else 
+    {
+        int m1 = n/2 - 1;
+        int m2 = n/2;
+        float ans = ((float)a[m1] + (float)a[m2]) / 2;    //take average of middle 2 numbers, that is the median
+        return ans;
+    }
+    
+}
+
+int mode(int a[], int n)        //function to find out mode
+{
+    unordered_map<int, int> map;    //unordered map uses hashtable, we assign a value to a key
+    for(int i = 0; i < n; i++)
+        map[a[i]]++;                //incrementing the value of the keys
+    
+    int mode = 0, f = 0;
+    for(int i = 0; i < n; i++)
+    {
+        if(map[a[i]] > f)           //key with greatest frequency is stored in mode
+        {
+            mode = a[i];
+            f = map.at(a[i]);       //f is revised each time mode value is reassigned
+        }
+    }
+    
+    return mode;
+}
+
+int main() {
+    int n; 
+    cin >> n;
+    int a[n];
+    for(int i = 0; i < n; i++)
+        cin >> a[i];
+        
+    float x = mean(a, n);
+    float y = median(a, n);
+    int z = mode(a, n);           //mode will be an element of the array, which is an integer
+                                  //rest 2 can be non-integral values
+    
+    cout << fixed << setprecision(1) << x << endl;        //syntax of setting the answer to 1 decimal value
+    cout << fixed << setprecision(1) << y << endl;        //setprecision() function is from bits/stdc++.h
+    cout << z;
+    return 0;
+}
